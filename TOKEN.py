@@ -154,8 +154,14 @@ def get_data_pycurl(url):
         curl.setopt(pycurl.HTTPHEADER, headers)
         curl.setopt(pycurl.WRITEDATA, buffer)
         curl.perform()
-        response_data = gzip.decompress(buffer.getvalue()).decode('utf-8')
+        
+        if curl.getinfo(pycurl.CONTENT_ENCODING) == 'gzip':
+            response_data = gzip.decompress(buffer.getvalue()).decode('utf-8')
+        else:
+            response_data = buffer.getvalue().decode('utf-8')
+            
         return response_data
+    
     except pycurl.error as e:
         print(f"Request failed: {e}")
         return ""
