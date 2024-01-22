@@ -155,10 +155,7 @@ def get_data_pycurl(url):
         curl.setopt(pycurl.WRITEDATA, buffer)
         curl.perform()
         
-        if curl.getinfo(pycurl.CONTENT_ENCODING) == 'gzip':
-            response_data = gzip.decompress(buffer.getvalue()).decode('utf-8')
-        else:
-            response_data = buffer.getvalue().decode('utf-8')
+        response_data = gzip.decompress(buffer.getvalue()).decode('utf-8')
             
         return response_data
     
