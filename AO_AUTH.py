@@ -1,9 +1,11 @@
 import configparser
-from smartapi import SmartConnect
+from SmartApi import SmartConnect
 import pyotp
 import time
 import pprint
 #import yaml
+import os
+import json
 
 # LOAD CONFIG
 
@@ -18,8 +20,11 @@ MPIN =  parser.get('API_AUTH', 'MPIN')
 TOTP_SECURITY_KEY =  parser.get('API_AUTH', 'TOTP_SECURITY_KEY')
 
 # LOAD CONFIG
-
+current_path = os.getcwd()
+AOAUTH_FILE_NAME = "AOAUTH"
+AOAUTH_FILE_NAME_FILEPATH = os.path.join(current_path,AOAUTH_FILE_NAME + '.json')
 # LOAD CONFIG
+
 TOTP_OBJ = pyotp.TOTP(TOTP_SECURITY_KEY)
 TOTP = TOTP_OBJ.now()
 
@@ -52,4 +57,5 @@ class ANGEL_ONE:
 
 ANGEL_ONE = ANGEL_ONE()
 ANGEL_ONE_OBJ = ANGEL_ONE.RETURN_SESSION_OBJ_AND_RESPONSE()
-pprint.pprint(ANGEL_ONE_OBJ)
+with open(AOAUTH_FILE_NAME_FILEPATH, "w") as outfile:
+    json.dump(ANGEL_ONE_OBJ, outfile)
