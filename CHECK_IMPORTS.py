@@ -5,9 +5,9 @@ import platform
 system = platform.system()
 required_modules = []
 if system == "Windows":
-    required_modules = ['urllib.request', 'json', 'pandas', 'datetime', 'platform', 'gzip', 'requests', 'io','cerberus']
+    required_modules = ['urllib.request', 'json', 'pandas', 'datetime', 'platform', 'gzip', 'requests', 'io','cerberus','pprint']
 elif system == "Linux":
-    required_modules = ['urllib.request', 'json', 'pandas', 'datetime', 'platform', 'gzip', 'requests', 'io','pycurl','cerberus']
+    required_modules = ['urllib.request', 'json', 'pandas', 'datetime', 'platform', 'gzip', 'requests', 'io','pycurl','cerberus','pprint']
 else:
     print(f"Running on {system}")
 # List of required modules
