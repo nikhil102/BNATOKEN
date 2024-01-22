@@ -1,0 +1,5 @@
+sudo rm -r BNATOKEN
+sudo git clone https://github.com/nikhil102/BNATOKEN.git
+cd BNATOKEN/
+sudo chown -R ubuntu:ubuntu /opt/BNATOKEN
+chmod +x runner.sh
