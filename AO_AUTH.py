@@ -1,5 +1,11 @@
 import configparser
-from SmartApi import SmartConnect
+import platform
+
+if platform.system() == "Linux":
+    from SmartApi import SmartConnect
+else:
+    from smartapi import SmartConnect
+    
 import pyotp
 import time
 import pprint
@@ -53,9 +59,27 @@ class ANGEL_ONE:
     self.obj = SmartConnect(api_key=self.API_KEY)
     self.responseSession = self.obj.generateSession(self.CLIENT_ID,self.MPIN,self.TOTP)
     return [self.obj,self.responseSession]
+
+  def RETURN_RESPONSE(self):
+    self.obj = SmartConnect(api_key=self.API_KEY)
+    self.responseSession = self.obj.generateSession(self.CLIENT_ID,self.MPIN,self.TOTP)
+    return self.responseSession
+
+  def RETURN_SESSION_OBJ_AND_STORE_RESPONSE(self):
+    self.obj = SmartConnect(api_key=self.API_KEY)
+    self.responseSession = self.obj.generateSession(self.CLIENT_ID,self.MPIN,self.TOTP)
+    with open(AOAUTH_FILE_NAME_FILEPATH, "w") as outfile:
+        json.dump(self.responseSession, outfile)
+    return self.obj
+  
+  def RETURN_SESSION_OBJ_AND_RES_AND_STORE_RES(self):
+    self.obj = SmartConnect(api_key=self.API_KEY)
+    self.responseSession = self.obj.generateSession(self.CLIENT_ID,self.MPIN,self.TOTP)
+    with open(AOAUTH_FILE_NAME_FILEPATH, "w") as outfile:
+        json.dump(self.responseSession, outfile)
+    return [self.obj,self.responseSession]
      
 
-ANGEL_ONE = ANGEL_ONE()
-ANGEL_ONE_OBJ = ANGEL_ONE.RETURN_SESSION_OBJ_AND_RESPONSE()
-with open(AOAUTH_FILE_NAME_FILEPATH, "w") as outfile:
-    json.dump(ANGEL_ONE_OBJ, outfile)
+if __name__ == "__main__": 
+    ANGEL_ONE = ANGEL_ONE()
+    ANGEL_ONE_OBJ = ANGEL_ONE.RETURN_SESSION_OBJ_AND_STORE_RESPONSE()
